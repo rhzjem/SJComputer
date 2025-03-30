@@ -16,8 +16,12 @@ body {
 .navbar {   
     display: flex;
     align-items: center;
-    padding: 0px;
+    padding: 0px 30px 0 30px;   
     padding-bottom: 60px;
+}
+
+.logo {
+    padding-top: 20px;
 }
 
 .logo img {
@@ -84,6 +88,7 @@ p {
 }
 
 .motto h1 {
+    color: #00296a;
     font-size: 50px;
     line-height: 60px;
 }
@@ -269,6 +274,14 @@ p {
     justify-content: space-around;
 }
 
+
+.rowService {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
 .servicesection {
     padding: 70px 0;
     background-color: #ffffff;
@@ -282,90 +295,51 @@ p {
 
 }
 
-.repair {
+.repair , .upgrade{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 5%;
     background-color: #8bbefc;
     width: 100%;
-    flex-basis: 45%;
-    margin: 20px;
-    min-height: 500px;
+    flex-basis: 50%;
+    margin-bottom: 20px;
+    min-height: 400px;
     border-radius: 20px;
 }
 
-.repairCon {
-    flex-basis: 25%;
+.repairCon, .upgradeCon {
+    flex-basis: 40%;
     min-width: 300px;
-    margin-bottom: 30px;
     background-color: #ffffff;
     padding: 10px;
+    margin: 10px;
     border-radius: 10px;
+    text-align: center;
 }
 
-.repairCon img {
+.repairCon img, .upgradeCon img {
     width: 100%;
     min-height: 300px;
     border-radius: 5px;
 }
 
-.repairCon h2 {
+.repairCon h2, .upgradeCon h2 {
     font-weight: 600;
     font-size: 1.19rem;
     padding: 10px 5px;
 }
 
-.upgrade {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px;
-    background-color: #8bbefc;
-    width: 100%;
-    flex-basis: 45%;
-    margin: 20px;
-    min-height: 500px;
-    border-radius: 20px;
-}
-
-.upgradeCon {
-    flex-basis: 25%;
-    min-width: 300px;
-    margin-bottom: 30px;
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.upgradeCon img {
-    width: 100%;
-    min-height: 300px;
-    border-radius: 5px;
-}
-
-.upgradeCon h2 {
-    font-weight: 600;
-    font-size: 1.19rem;
-    padding: 10px 5px;
+.rowService .left, .rowService .right{
+    flex-basis: 30%;
 }
 
 .serviceButton {
     display: flex;
-}
-
-.serviceButton .repairButton {
+    justify-content: center;
     background-color: #8bbefc;
-    padding: 10px 297px;
-    margin: 05px 0 0;
+    padding: 10px 150px;
     border-radius: 20px;
-}
-
-.serviceButton .upgradeButton {
-    background-color: #8bbefc;
-    padding: 10px 288px;
-    margin: 0 0 0 75px;
-    border-radius: 20px ;
 }
 
 /* Why Choose Section */
@@ -580,4 +554,139 @@ ul {
 }
 
 
+.smallContainer {
+    max-width: 1300px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
 
+.menuIcon {
+    width: 28px;
+    margin-left: 20px;
+}
+
+/* Shop */
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 30px;
+    
+    
+}
+
+.tabs a {
+    color: #00296a;
+    font-size: 14px;
+    padding: 5px 30px;
+    border: 1px solid #e2e2e2;  
+    border-radius: 20px; 
+    transition: 0.1s ease;
+}
+
+.tabs a:hover {
+    background: #8bbefc;
+}
+
+
+.cards {
+    flex-basis: 25;
+    padding: 10px;
+    max-width: 250px;
+    margin-bottom: 50px;
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e5e5;
+    transition: transform 0.5s;
+    cursor: pointer;
+}
+
+.cards:hover {
+    transform: translateY(-5px);
+}
+
+.cards img {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.cards h3 {
+    color: #00296a;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+
+.cards p {
+    font-size: 18px;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
+
+
+/*Product Details*/
+
+.col2 {
+    flex-basis: 50%;
+    min-width: 300px;
+}
+
+.productDetails .col2 img{
+    border: 1px solid #000; 
+}
+
+.productDetails .col2 {
+    padding: 35px;
+}
+
+.productDetails .btn {
+    display: inline-block;
+    background: #f23535;
+    color: white;
+    padding: 8px 40px;
+    margin: 30px 30px;
+    border-radius: 30px; 
+}
+
+.productDetails h1, h3, p, .row2 h2 {
+    color: #00296a;
+}
+
+.productDetails h4 {
+    color: #f23535;
+    margin: 20px 0;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.productDetails select {
+    display: block;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.productDetails input {
+    width: 50px;
+    height: 40px;
+    padding-left: 10px;
+    font-size: 20px;
+    margin-right: 10px;
+    border: 1px solid #f23535;
+}
+
+input:focus {
+    outline: none;
+}
+
+.smallContainer .row2 {
+    display: flex;
+    margin: 40px 30px;
+    justify-content: space-between;
+}
+
+.smallContainer .row2 a {
+    padding-top: 8px;
+    color: #f23535;
+}

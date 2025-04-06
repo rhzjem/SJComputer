@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details - SJ Computer | E-commerce</title>
+    <title>Shop - SJ Computer | E-commerce</title>
     <script src="https://kit.fontawesome.com/cca3f4e97d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
-
     
 <div class="container">
     <div class="navbar">
@@ -26,7 +25,7 @@
             <ul id="MenuItems">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="shop.html">Shop</a></li>
-                <li><a href="emptyCart.html">Cart</a></li>
+                <li><a href="cart.html">Cart</a></li>
                 <!-- <li><a href="">Services</a></li>
                 <li><a href="">About</a></li>
                 <li><a href="">Contact</a></li> -->
@@ -38,39 +37,52 @@
 </div>
 
 
-<div class="accountPage">
-    <div class="form">
-            <div class="formBtn">
-                <span>Login</span>
-            </div>
-            <div class="inputForm">
-                <form>
-                    <h3>Email/Username</h3>
-                    <input type="text">
-                    <h3>Password</h3>
-                    <input type="password">
-            </div>
-            <div class="buttonLogin">
-                <button type="submit" class="loginBtn">Login</button>
-            </div>
-            <div class="forgotPass">
-                <a href="">Forgot Password</a>
-            </div>
-            <div class="signInShortcut">
-                <p>Don't have an account? <a href="signin.html"><u>Sign In</a></p>
-            </div>
-                </form>
-             
+    <div class="smallContainer">    
+    
+        <div class="tabs">
+            <a href = "shop.html" class="btnAll">All Products</a>
+            <a href = "laptop.html" class="btnLaptop">Laptop</a>
+            <a href = "desktop.html" class="btnDesktop">Desktop</a>
+            <a href = "monitor.html" class="btnMonitor">Monitor</a>
+            <a href = "ssd.html" class="btnSSD">SSD</a>
+            <a href = "ups.html" class="btnUPS">UPS</a>
+            <a href = "printer.html" class="btnPrinter">Printer</a>
+            <a href = "ink.html" class="btnInk">Ink</a>     
+        </div>
 
-            <!-- <form>
-                <input type="text" placeholder="Email">
-                <input type="text" placeholder="Username">
-                <input type="password" placeholder="Password">
-                <button type="submit" class="btnLogin">Sign In</button>
-            </form> -->
+        <div class="row">
+            <div class="cards">
+                <img src="images/APC UPS 650VA.png" alt="">
+                <h3>APC UPC 650VA</h3>
+                <div class="rating">
+                    <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                    <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                    <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                    <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                    <i class="fa-regular fa-star" style="color: #FFD43B"></i>
+                </div>
+                <p>₱ 3,400.00</p>
+            </div>
+
+            <div class="cards">
+                <img src="images/APC UPS  1200VA.png" alt="">
+                <h3>APC UPC 1200VA</h3>
+                <div class="rating">
+                    <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                    <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                    <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                    <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                    <i class="fa-regular fa-star" style="color: #FFD43B"></i>
+                </div>
+                <p>₱ 7,799.00</p>
+            </div>
+            
+        </div>
     </div>
-</div>
 
+    
+    
+    
 
     <div class="footer">
         <div class="container">
@@ -103,4 +115,4 @@
     </div>
 
 </body>
-</html> 
+</html>

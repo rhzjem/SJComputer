@@ -61,7 +61,7 @@ if (isset($_POST['add_to_cart'])) {
                 <li><a href="index.php">Home</a></li>
                 <li><a href="shop.php">Shop</a></li>
                 <li><a href="cart.php">Cart <?php if (isLoggedIn()): ?>(<?php echo getCartItemCount($_SESSION['user_id']); ?>)<?php endif; ?></a></li>
-                <li><a href="services.html">Services</a></li>
+                <li><a href="services.php">Services</a></li>
                 <?php if (isLoggedIn()): ?>
                     <li><a href="profile.php">Profile</a></li>
                     <li><a href="logout.php">Logout</a></li>
@@ -78,16 +78,19 @@ if (isset($_POST['add_to_cart'])) {
     <?php if ($product): ?>
     <div class="row">
         <div class="col2">
-            <img src="<?php echo htmlspecialchars($product['image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" width="70%">
+            <img src="<?php echo htmlspecialchars($product['image_path']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
         </div>
         <div class="col2">
             <h1><?php echo htmlspecialchars($product['name']); ?></h1>
             <h4><?php echo formatPrice($product['price']); ?></h4>
+            
             <form method="post">
-                <input type="number" name="quantity" value="1" min="1" max="<?php echo $product['stock_quantity']; ?>">
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" value="1" min="1" max="<?php echo $product['stock_quantity']; ?>">
                 <button type="submit" name="add_to_cart" class="btn">Add to Cart</button>
             </form>
-            <h3>Product Details</h3><br>
+            
+            <h3>Product Details</h3>
             <p><?php echo nl2br(htmlspecialchars($product['description'])); ?></p>
             <p><strong>Stock:</strong> <?php echo $product['stock_quantity']; ?> available</p>
             <p><strong>Category:</strong> <?php echo htmlspecialchars($product['category_name']); ?></p>

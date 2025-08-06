@@ -32,7 +32,7 @@ $featuredProducts = getFeaturedProducts();
                         <li><a href="index.php">Home</a></li>
                         <li><a href="shop.php">Shop</a></li>
                         <li><a href="cart.php">Cart <?php if (isLoggedIn()): ?>(<?php echo getCartItemCount($_SESSION['user_id']); ?>)<?php endif; ?></a></li>
-                        <li><a href="services.html">Services</a></li>
+                        <li><a href="services.php">Services</a></li>
                         <?php if (isLoggedIn()): ?>
                             <li><a href="profile.php">Profile</a></li>
                             <li><a href="logout.php">Logout</a></li>
@@ -99,7 +99,7 @@ $featuredProducts = getFeaturedProducts();
                 <div class="price">
                     <p>Now only <b>Php 5,999.00</b></p>
                 </div>
-                <a href="shop.php" class="buybtn">Buy Now</a><br>
+                <a href="productDetails.php?id=8" class="buybtn">Buy Now</a><br>
                 <div class="valid">
                     <small>Valid until April 30,2025 </small>
                 </div>

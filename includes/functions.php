@@ -308,4 +308,49 @@ function uploadImage($file, $targetDir = 'uploads/') {
     
     return false;
 }
+
+function getUserById($userId) {
+    $conn = getDBConnection();
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->execute([$userId]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function updateUserPassword($userId, $newPassword) {
+    try {
+        $conn = getDBConnection();
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+        $success = $stmt->execute([$hashedPassword, $userId]);
+        
+        return [
+            'success' => $success,
+            'message' => $success ? 'Password updated successfully' : 'Failed to update password'
+        ];
+    } catch (PDOException $e) {
+        return [
+            'success' => false,
+            'message' => 'Database error: ' . $e->getMessage()
+        ];
+    }
+}
+
+function updateUserProfile($userId, $fullName, $email, $phone, $address) {
+    try {
+        $conn = getDBConnection();
+        $stmt = $conn->prepare("UPDATE users SET full_name = ?, email = ?, phone = ?, address = ? WHERE id = ?");
+        $success = $stmt->execute([$fullName, $email, $phone, $address, $userId]);
+        
+        return [
+            'success' => $success,
+            'message' => $success ? 'Profile updated successfully' : 'Failed to update profile'
+        ];
+    } catch (PDOException $e) {
+        return [
+            'success' => false,
+            'message' => 'Database error: ' . $e->getMessage()
+        ];
+    }
+}
 ?> 
+

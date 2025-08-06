@@ -35,7 +35,7 @@ $categories = getAllCategories();
                 <li><a href="index.php">Home</a></li>
                 <li><a href="shop.php">Shop</a></li>
                 <li><a href="cart.php">Cart <?php if (isLoggedIn()): ?>(<?php echo getCartItemCount($_SESSION['user_id']); ?>)<?php endif; ?></a></li>
-                <li><a href="services.html">Services</a></li>
+                <li><a href="services.php">Services</a></li>
                 <?php if (isLoggedIn()): ?>
                     <li><a href="profile.php">Profile</a></li>
                     <li><a href="logout.php">Logout</a></li>
@@ -75,19 +75,21 @@ $categories = getAllCategories();
             <?php foreach ($products as $product): ?>
                 <div class="product-card" data-category="<?php echo strtolower($product['category_name']); ?>">
                     <div class="cards">
-                        <img src="<?php echo $product['image_path'] ?: 'images/default-product.png'; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-                        <p class="<?php echo strtolower($product['category_name']); ?>Badge"><?php echo $product['category_name']; ?></p>
-                        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-                        <div class="rating">
-                            <i class="fa-solid fa-star" style="color: #FFD43B"></i>
-                            <i class="fa-solid fa-star" style="color: #FFD43B"></i>
-                            <i class="fa-solid fa-star" style="color: #FFD43B"></i>
-                            <i class="fa-solid fa-star" style="color: #FFD43B"></i>
-                            <i class="fa-regular fa-star" style="color: #FFD43B"></i>
-                        </div>
-                        <p><?php echo formatPrice($product['price']); ?></p>
+                        <a href="productDetails.php?id=<?php echo $product['id']; ?>" class="card-link">
+                            <img src="<?php echo $product['image_path'] ?: 'images/default-product.png'; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                            <p class="<?php echo strtolower($product['category_name']); ?>Badge"><?php echo $product['category_name']; ?></p>
+                            <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                            <div class="rating">
+                                <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                                <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                                <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                                <i class="fa-solid fa-star" style="color: #FFD43B"></i>
+                                <i class="fa-regular fa-star" style="color: #FFD43B"></i>
+                            </div>
+                            <p><?php echo formatPrice($product['price']); ?></p>
+                        </a>
                         <?php if (isLoggedIn()): ?>
-                            <button class="add-to-cart-btn" onclick="addToCart(<?php echo $product['id']; ?>)">Add to Cart</button>
+                            <button class="add-to-cart-btn" onclick="addToCart(<?php echo $product['id']; ?>, event)">Add to Cart</button>
                         <?php else: ?>
                             <a href="login.php" class="login-to-buy-btn">Login to Buy</a>
                         <?php endif; ?>
@@ -134,7 +136,12 @@ $categories = getAllCategories();
 </div>
 
 <script>
-function addToCart(productId) {
+function addToCart(productId, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    
     fetch('ajax/add_to_cart.php', {
         method: 'POST',
         headers: {
@@ -146,7 +153,8 @@ function addToCart(productId) {
     .then(data => {
         if (data.success) {
             alert('Product added to cart!');
-            location.reload(); // Refresh to update cart count
+            // Update cart count without reloading the page
+            updateCartCount();
         } else {
             alert('Error: ' + data.message);
         }
@@ -154,6 +162,19 @@ function addToCart(productId) {
     .catch(error => {
         console.error('Error:', error);
         alert('Error adding product to cart');
+    });
+}
+
+function updateCartCount() {
+    fetch('ajax/get_cart_count.php')
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const cartCountElement = document.querySelector('#MenuItems li:nth-child(3) a');
+            if (cartCountElement) {
+                cartCountElement.innerHTML = 'Cart (' + data.count + ')';
+            }
+        }
     });
 }
 </script>

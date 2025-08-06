@@ -116,7 +116,7 @@ function initializeDatabase() {
         ['name' => 'SSD', 'description' => 'Solid State Drives'],
         ['name' => 'UPS', 'description' => 'Uninterruptible Power Supplies'],
         ['name' => 'Printer', 'description' => 'Printing devices'],
-        ['name' => 'Ink', 'description' => 'Printer ink cartridges']
+        ['name' => 'Ink', 'description' => 'Printer ink']
     ];
     
     $stmt = $conn->prepare("INSERT IGNORE INTO categories (name, description) VALUES (?, ?)");

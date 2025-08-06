@@ -1,0 +1,72 @@
+/* profile.css */
+.profile-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.profile-info, .change-password {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.profile-info h2, .change-password h2 {
+    color: #00296a;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.profile-form input, .profile-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.profile-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500;
+}
+
+.profile-form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.update-profile-btn {
+    background: #00296a;
+}
+
+.change-password-btn {
+    background: #f23535;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+    background: #ffe6e6;
+    border-radius: 5px;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+    background: #e6ffe6;
+    border-radius: 5px;
+}

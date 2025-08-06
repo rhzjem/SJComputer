@@ -128,6 +128,57 @@ p {
     background: #344556;
 }
 
+/* Add these styles to your CSS */
+.cards {
+    position: relative; /* Add this to make the button position relative to the card */
+    flex-basis: 25;
+    padding: 10px;
+    max-width: 250px;
+    margin-bottom: 50px;
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e5e5;
+    transition: transform 0.5s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-link {
+    flex-grow: 1; /* Make the link take up remaining space */
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.add-to-cart-btn, .login-to-buy-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+    margin-top: 10px;
+    text-align: center;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background: #da3939;
+}   
+
+.login-to-buy-btn {
+    background: #6c757d;
+}
+
+.login-to-buy-btn:hover {
+    background: #5a6268;
+}
+
 
 /*Featured Section*/
 
@@ -204,6 +255,17 @@ p {
 .cardList .cardLink .desktopBadge {
     color: #4396bd;
     background: #cae4f7;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cardList .cardLink .monitorBadge {
+    color: #8443bd;
+    background: #e5caf7;
     padding: 5px 16px;
     font-size: 0.70rem;
     font-weight: 500;
@@ -314,6 +376,29 @@ p {
     .loginBtn {
         max-width: 350px;
     }
+}
+
+/*Product Card at shop page*/
+
+.cards img {
+    width: 100%;
+    height: 200px; /* Fixed height */
+    object-fit: contain; /* or 'cover' depending on your preference */
+    border-radius: 4px;
+}
+
+
+.product-card {
+    flex: 0 0 calc(25% - 20px); /* Adjust percentage based on how many cards per row you want */
+    margin: 10px;
+    max-width: 250px; /* Match this with your cards max-width */
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* or center depending on your preference */
+    gap: 20px; /* This replaces margin on individual cards */
 }
 
 /* Services Section*/
@@ -965,6 +1050,127 @@ input:focus {
 }
 
 
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card-link:hover .cards {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.add-to-cart-btn, .login-to-buy-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+    margin-top: 10px;
+    text-align: center;
+    background: #f23535;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.login-to-buy-btn {
+    background: #3374f6;
+}
+
+/* Product Details Page Layout */
+.productDetails .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.productDetails .col2 {
+    flex: 1;
+    min-width: 300px;
+}
+
+.productDetails .col2 img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.productDetails .col2:last-child {
+    padding: 20px;
+}
+
+.productDetails h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.productDetails h4 {
+    font-size: 24px;
+    color: #f23535;
+    margin: 20px 0;
+}
+
+.productDetails form {
+    margin: 25px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.productDetails input[type="number"] {
+    width: 80px;
+    height: 40px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.productDetails .btn {
+    background: #f23535;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.productDetails .btn:hover {
+    background: #d62b2b;
+}
+
+.productDetails h3 {
+    font-size: 20px;
+    margin: 25px 0 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .productDetails .row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .productDetails .col2 {
+        width: 100%;
+    }
+    
+    .productDetails .col2 img {
+        max-width: 100%;
+    }
+}
 
 
 /* cart */
@@ -1060,18 +1266,42 @@ account */
 .accountPage {
     padding: 50px 0;
     background: radial-gradient(#fff, #8bbefc);
+    min-height: calc(100vh - 120px); /* Adjust based on your header/footer height */
+    display: flex;
+    align-items: center; background: radial-gradient(#fff, #8bbefc);
 }
 
 .form {
     background: white;
     width: 400px;
-    min-height: 600px;
+    height: auto;
     border-radius: 12px;
     position: relative;
     text-align: center;
     padding: 30px 0;
-    margin: auto;
+    margin: 40px auto;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.formBtn {
+    margin-bottom: 20px;
+}
+
+.inputForm {
+    padding: 0 40px 20px;
+}
+
+.buttonLogin {
+    margin-bottom: 0px;
+}
+
+.forgotPass {
+    margin-bottom: 15px;
+    padding: 0 100px;
+}
+
+.signInShortcut {
+    margin-bottom: 20px;
 }
 
 .signup-form {
@@ -1267,4 +1497,8 @@ account */
     cursor: pointer;
     border-radius: 5px;
   }
+
+
+
+
   

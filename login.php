@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li><a href="index.php">Home</a></li>
                 <li><a href="shop.php">Shop</a></li>
                 <li><a href="cart.php">Cart</a></li>
-                <li><a href="services.html">Services</a></li>
+                <li><a href="services.php">Services</a></li>
                 <?php if (isLoggedIn()): ?>
                     <li><a href="profile.php">Profile</a></li>
                     <li><a href="logout.php">Logout</a></li>
@@ -78,22 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         
         <?php if ($error): ?>
-            <div class="error-message" style="color: red; text-align: center; margin: 10px 0;"><?php echo $error; ?></div>
-        <?php endif; ?>
-        
-        <!-- Debug Information -->
-        <?php if (isset($_POST['username'])): ?>
-            <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 12px;">
-                <strong>Debug Info:</strong><br>
-                Username submitted: <?php echo htmlspecialchars($_POST['username']); ?><br>
-                Password length: <?php echo strlen($_POST['password']); ?> characters<br>
-                Session status: <?php echo isLoggedIn() ? 'Logged In' : 'Not Logged In'; ?><br>
-                Admin status: <?php echo isAdmin() ? 'Admin' : 'Not Admin'; ?>
-            </div>
+            <div class="error-message"><?php echo $error; ?></div>
         <?php endif; ?>
         
         <?php if ($success): ?>
-            <div class="success-message" style="color: green; text-align: center; margin: 10px 0;"><?php echo $success; ?></div>
+            <div class="success-message"><?php echo $success; ?></div>
         <?php endif; ?>
         
         <div class="inputForm">

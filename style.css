@@ -190,7 +190,7 @@ p {
     border-radius: 5px;
 }
 
-.cardList .cardLink .partsBadge {
+.cardList .cardLink .laptopBadge {
     color: #d47c7c;
     background: #f7caca;
     padding: 5px 16px;
@@ -199,10 +199,20 @@ p {
     margin: 10px 0 14px;
     width: fit-content;
     border-radius: 50px;
-
 }
 
-.cardList .cardLink .accessoriesBadge {
+.cardList .cardLink .desktopBadge {
+    color: #4396bd;
+    background: #cae4f7;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cardList .cardLink .ssdBadge {
     color: #bdb343;
     background: #f7f2ca;
     padding: 5px 16px;
@@ -211,7 +221,28 @@ p {
     margin: 10px 0 14px;
     width: fit-content;
     border-radius: 50px;
+}
 
+.cardList .cardLink .printerBadge {
+    color: #bd43a9;
+    background: #f7caf6;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cardList .cardLink .inkBadge {
+    color: #43bd49;
+    background: #caf7cc;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
 }
 
 .cardList .cardLink .cardTitle {
@@ -262,6 +293,26 @@ p {
 
     .card-wrapper .swiper-slide-button {
         display: none;
+    }
+    
+    .form {
+        width: 90%;
+        max-width: 400px;
+        padding: 20px 0;
+    }
+    
+    .signup-form {
+        width: 95%;
+        max-width: 500px;
+        padding: 30px 0;
+    }
+    
+    .inputForm {
+        padding: 0 25px;
+    }
+    
+    .loginBtn {
+        max-width: 350px;
     }
 }
 
@@ -431,6 +482,13 @@ p {
     padding: 8px 40px;
     border-radius: 20px;
     margin: 0 0 20px 0;   
+    transition: .4s ease;
+}
+
+.limitedOffer .row .left .buybtn:hover {
+    color: whitesmoke;
+    background-color: #adadad;
+      
 }
 
 .limitedOffer .row .left .valid {
@@ -553,6 +611,16 @@ ul {
     list-style: none;
 }
 
+.copyright {
+    text-align: center;
+    padding-top: 40px;
+    padding-left: 70px;
+}
+
+.copyright p {
+    padding-top: 60px;
+}
+
 
 .smallContainer {
     max-width: 1300px;
@@ -590,6 +658,133 @@ ul {
     background: #8bbefc;
 }
 
+.tabs a.active-tab {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* services */
+
+
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.service-card {
+    display: flex;
+    justify-content: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.service-card .pic, .service-card .text{
+    flex: 1;
+}
+
+.service-card .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center horizontally */
+    text-align: center;
+    padding: 10px
+}
+
+.service-card h2 {
+    color: #00296a;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.service-card h4 {
+    color: #00296a;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.book-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f23535;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+}
+
+/* booking */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .modal-content h2 {
+    margin-bottom: 20px;
+  }
+  
+  .modal-content label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .modal-content input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  .modal-content button {
+    margin-top: 15px;
+    background-color: #f23535;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
 
 .cards {
     flex-basis: 25;
@@ -612,6 +807,83 @@ ul {
     border-radius: 4px;
 }
 
+.cards .laptopBadge {
+    color: #d47c7c;
+    background: #f7caca;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cards .desktopBadge {
+    color: #4396bd;
+    background: #cae4f7;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cards .monitorBadge {
+    color: #8443bd;
+    background: #e5caf7;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cards .ssdBadge {
+    color: #bdb343;
+    background: #f7f2ca;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cards .upsBadge {
+    color: #bd7843;
+    background: #f7deca;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cards .printerBadge {
+    color: #bd43a9;
+    background: #f7caf6;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
+.cards .inkBadge {
+    color: #43bd49;
+    background: #caf7cc;
+    padding: 5px 16px;
+    font-size: 0.70rem;
+    font-weight: 500;
+    margin: 10px 0 14px;
+    width: fit-content;
+    border-radius: 50px;
+}
+
 .cards h3 {
     color: #00296a;
     font-weight: 700;
@@ -619,6 +891,7 @@ ul {
 }
 
 .cards p {
+    color: #f23535;
     font-size: 18px;
     font-weight: 600;
     padding-top: 10px;
@@ -745,6 +1018,23 @@ td a{
     font-size: 12px;
 }
 
+.goShopBtn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 30px;
+    background-color: #f23535;
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.goShopBtn:hover {
+    background-color: #d62626;
+}
+
+
 .totalPrice {
     display: flex;
     justify-content: flex-end;
@@ -774,32 +1064,88 @@ account */
 
 .form {
     background: white;
-    width: 300px;
-    height: 400px;
+    width: 400px;
+    min-height: 600px;
     border-radius: 12px;
     position: relative;
     text-align: center;
-    padding: 20px 0;
+    padding: 30px 0;
     margin: auto;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.01);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.signup-form {
+    width: 500px;
+    min-height: 800px;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 } 
 .inputForm {
-    display: flex;
+    display: flex !important;
+    flex-direction: column !important;
     text-align: left;
-    padding: 0 20px;
+    padding: 0 40px;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px;
+    width: 100% !important;
+    margin-bottom: 15px !important;
 }
 
 .inputForm h3 {
-    font-weight: 400;
-    font-size: 16px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    text-align: left;
 }
 
-.inputForm input {
-    width: 260px;
-    height: 28px;
-    border-radius: 20px;
-    border: 2px solid #adadad;
-    margin-bottom: 16px;
+.inputForm input,
+.inputForm textarea {
+    width: 100% !important;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 2px solid #e1e1e1;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+    margin: 0;
+    display: block !important;
+}
+
+.inputForm input:focus,
+.inputForm textarea:focus {
+    outline: none;
+    border-color: #00296a;
+}
+
+.inputForm textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+.buttonLogin {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+.signup-form-content {
+    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
 }
  
 .form span {
@@ -813,12 +1159,22 @@ account */
 
 .loginBtn {
     display: inline-block;
-    background: rgb(6, 6, 122);
+    background: #00296a;
     color: white;
-    width: 260px;
-    padding: 8px;
-    margin: 10px 20px;  
-    border-radius: 30px; 
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    margin: 25px 0;  
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.loginBtn:hover {
+    background: #001a4a;
 }
 
 .signInBtn {
@@ -840,11 +1196,19 @@ account */
 
 .signInShortcut p {
     color: #595959;
-    font-size: 12px;
+    font-size: 14px;
+    margin: 20px 0 0 0;
+    text-align: center;
 }
 
 .signInShortcut a {
-    font-size: 12px;
+    font-size: 14px;
+    color: #00296a;
+    text-decoration: none;
+}
+
+.signInShortcut a:hover {
+    text-decoration: underline;
 }
 
 .loginShortcut p {
@@ -855,3 +1219,52 @@ account */
 .loginShortcut a {
     font-size: 12px;
 }
+
+/* checkout */
+
+.checkout {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.checkoutBtn {
+    color: whitesmoke;
+    background-color: #f23535;
+    padding: 10px 100px;
+    border-radius: 20px;
+}
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .modal-content p {
+    padding: 10px;
+  }
+
+  #backToShopBtn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  

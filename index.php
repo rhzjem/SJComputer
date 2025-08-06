@@ -1,3 +1,9 @@
+<?php
+require_once 'includes/functions.php';
+
+// Get featured products
+$featuredProducts = getFeaturedProducts();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +16,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">     
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
     
@@ -24,14 +29,17 @@
 
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="cart.html">Cart</a></li>
-                        <!-- <li><a href="">Services</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li> -->
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="signin.html">Sign Up</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="shop.php">Shop</a></li>
+                        <li><a href="cart.php">Cart <?php if (isLoggedIn()): ?>(<?php echo getCartItemCount($_SESSION['user_id']); ?>)<?php endif; ?></a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <?php if (isLoggedIn()): ?>
+                            <li><a href="profile.php">Profile</a></li>
+                            <li><a href="logout.php">Logout</a></li>
+                        <?php else: ?>
+                            <li><a href="login.php">Login</a></li>
+                            <li><a href="signin.php">Sign Up</a></li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
             </div>
@@ -40,79 +48,34 @@
                 <div class="motto">
                     <h1>Power Up Your PC</h1>
                     <h3>Build, Repair, and Shop With Confidence</h3>
-                    <p>From top-quality parts to expert repairs, we’ve got everything<br>
+                    <p>From top-quality parts to expert repairs, we've got everything<br>
                         you need to keep your PC running at its best.</p>
-                    <a href="shop.html" class="btnShop">Shop Now</a>
-                    <!-- <a href="" class="btnServices">Book Repair Now</a> -->
+                    <a href="shop.php" class="btnShop">Shop Now</a>
                 </div>
 
                 <div class="pic">
                     <img src="images/image1.jpg">
                 </div>
             </div>    
-
         </div>
     </div>
 
     <div class="featuredsection">
-        <h2 class="featured"> Featured Products</h2>
+        <h2 class="featured">Featured Products</h2>
         <div class="containerFeature swiper">
             <div class="card-wrapper">
                 <ul class="cardList swiper-wrapper">
-                    <li class="cardItems swiper-slide">
-                        <a href="#" class="cardLink">
-                            <img src="images/Acer Aspire 5.png" alt="Card image1" class="cardImage">
-                            <p class="partsBadge">Laptop</p>
-                            <h2 class="cardTitle">Acer Aspire 5</h2>
-                            <h2 class="price">₱ 0.00</h2>
-                            <button class="cardButton">View on Shop</button>
-                        </a>    
-                    </li>
-                    <li class="cardItems swiper-slide">
-                        <a href="#" class="cardLink">
-                            <img src="images/Kingston SA400S37480G SSDNOW A400 480GB.png" alt="Card image2" class="cardImage">
-                            <p class="accessoriesBadge">SSD</p>
-                            <h2 class="cardTitle">Kingston 480GB SSD</h2>
-                            <h2 class="price">₱ 0.00</h2>
-                            <button class="cardButton">View on Shop</button>
-                        </a>    
-                    </li>
-                    <li class="cardItems swiper-slide">
-                        <a href="#" class="cardLink">
-                            <img src="images/Epson EcoTank L1210 A4 Ink Tank Printer.png" alt="Card image3" class="cardImage">
-                            <p class="partsBadge">Printer</p>
-                            <h2 class="cardTitle">Epson EcoTank L1210...</h2>
-                            <h2 class="price">₱ 0.00</h2>
-                            <button class="cardButton">View on Shop</button>
-                        </a>    
-                    </li>
-                    <li class="cardItems swiper-slide">
-                        <a href="#" class="cardLink">
-                            <img src="images/Lenovo Ideapad.png" alt="Card image4" class="cardImage">
-                            <p class="partsBadge">Laptop</p>
-                            <h2 class="cardTitle">Lenovo Ideapad</h2>
-                            <h2 class="price">₱ 0.00</h2>
-                            <button class="cardButton">View on Shop</button>
-                        </a>    
-                    </li>
-                    <li class="cardItems swiper-slide">
-                        <a href="#" class="cardLink">
-                            <img src="images/Epson Ink 003 Black.png" alt="Card image5" class="cardImage">
-                            <p class="accessoriesBadge">Ink</p>
-                            <h2 class="cardTitle">Epson Ink 003 Black</h2>
-                            <h2 class="price">₱ 0.00</h2>
-                            <button class="cardButton">View on Shop</button>
-                        </a>    
-                    </li>
-                    <li class="cardItems swiper-slide">
-                        <a href="#" class="cardLink">
-                            <img src="images/Acer Desktop PC with Acer Monitor.png" alt="Card image6" class="cardImage">
-                            <p class="accessoriesBadge">Desktop</p>
-                            <h2 class="cardTitle">Acer Desktop PC with Acer Monitor</h2>
-                            <h2 class="price">₱ 0.00</h2>
-                            <button class="cardButton">View on Shop</button>
-                        </a>    
-                    </li>
+                    <?php foreach ($featuredProducts as $product): ?>
+                        <li class="cardItems swiper-slide">
+                            <a href="productDetails.php?id=<?php echo $product['id']; ?>" class="cardLink">
+                                <img src="<?php echo $product['image_path'] ?: 'images/default-product.png'; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="cardImage">
+                                <p class="<?php echo strtolower($product['category_name']); ?>Badge"><?php echo $product['category_name']; ?></p>
+                                <h2 class="cardTitle"><?php echo htmlspecialchars($product['name']); ?></h2>
+                                <h2 class="price"><?php echo formatPrice($product['price']); ?></h2>
+                                <button class="cardButton">View on Product</button>
+                            </a>    
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-slide-button swiper-button-prev"></div>
@@ -129,59 +92,22 @@
         <div class="row">
             <div class="left">
                 <h2>Limited-Time Offer</h2>
-                <h1>ASUS TUF Gaming Monitor 27”</h1>
+                <h1>Samsung 22-Inch Full HD IPS Monitor</h1>
                 <p>Upgrade your setup with ultra-smooth 
-                    visuals, 165Hz Full HD<br>high refresh rates 
-                    for ultra-smooth gameplay!</p>
+                    visuals, 22-Inch Full HD IPS Monitor<br>high refresh rates 
+                    for ultra-smooth experience!</p>
                 <div class="price">
-                    <p>Now only <b>Php 9,999.00</b></b>
+                    <p>Now only <b>Php 5,999.00</b></p>
                 </div>
-                <a href="#" class="buybtn">Buy Now</a><br>
+                <a href="shop.php" class="buybtn">Buy Now</a><br>
                 <div class="valid">
                     <small>Valid until April 30,2025 </small>
                 </div>
             </div>
             <div class="right">
-                <img src="images/asustuf.png" alt="asusImage">
+                <img src="images/limiterTimeOfferPic.png" alt="asusImage">
             </div>
         </div>
-        </div>
-    </div>
-    
-    <div class="servicesection">
-        <h3>Services Overview</h3>
-        <div class="rowService">
-            <div class="left">
-                <div class="repair">
-                    <div class="repairCon">
-                        <img src="images/repair1.png" alt="">
-                        <h2>Hardware Troubleshooting</h2>
-                    </div>
-                    <div class="repairCon">
-                        <img src="images/repair2.png" alt="">
-                        <h2>OS Installation</h2>
-                    </div> 
-                </div>
-                <div class="serviceButton">
-                    <a href="">Book Repair</a>
-                </div>
-            </div>
-
-            <div class="right">
-                <div class="upgrade">
-                    <div class="upgradeCon">
-                        <img src="images/upgrade1.png" alt="">
-                        <h2>RAM and SSD Upgrade</h2>
-                    </div>
-                    <div class="upgradeCon">
-                        <img src="images/upgrade2.png" alt="">
-                        <h2>Processor Installations</h2>
-                    </div>  
-                </div>
-                <div class="serviceButton">
-                    <a href="">Book Upgrade</a>
-                </div>   
-            </div>
         </div>
     </div>
 
@@ -255,7 +181,6 @@
                     <i class="fa-solid fa-quote-left"></i> 
                 </div>    
                 <div class="statement">
-                    
                     <p>Lorem ipsum is the best dummy text. eththh egeheh rregerg.</p>
                 </div>
             </div>
@@ -279,7 +204,6 @@
         </div>
     </div>
 
-
     <div class="footer">
         <div class="container">
             <div class="row">
@@ -297,18 +221,23 @@
                     <h4>Location</h4>
                     <p>Manlapaz Bldg. F. Pimentel Ave. Daet, Camarines Norte</p>
                 </div>
-                    <div class="socMed">
-                        <h3>Follow Us</h3>
-                        <ul>
-                            <li>Facebook</li>
-                            <li>Instagram</li>
-                        </ul>
-                        <h4>Contact Us</h4>
-                        <p>0987654321</p>
-                    </div>
+                <div class="socMed">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Instagram</li>
+                    </ul>
+                    <h4>Contact Us</h4>
+                    <p>0987654321</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <hr>
+                <p>&copy; 2025 SJ Computer. All rights reserved.</p>
             </div>
         </div>
     </div>
 
 </body>
-</html>
+</html> 

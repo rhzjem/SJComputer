@@ -21,7 +21,7 @@ if (isset($_POST['update_status'])) {
 
 // Get all service bookings with customer information
 $stmt = $conn->prepare("
-    SELECT sb.*, u.username, u.full_name, u.email, u.phone 
+    SELECT sb.*, u.username, sb.customer_name as full_name, sb.customer_email as email, sb.contact_number as phone
     FROM service_bookings sb 
     JOIN users u ON sb.user_id = u.id 
     ORDER BY sb.created_at DESC
@@ -352,7 +352,7 @@ foreach ($statuses as $status) {
             color: white;
         }
         
-        .service-type {
+        .service-name {
             background: #e3f2fd;
             color: #1976d2;
             padding: 0.25rem 0.5rem;
@@ -378,7 +378,6 @@ foreach ($statuses as $status) {
             <li><a href="orders.php"><i class="fas fa-shopping-cart"></i> Orders</a></li>
             <li><a href="customers.php"><i class="fas fa-users"></i> Customers</a></li>
             <li><a href="services.php" class="active"><i class="fas fa-tools"></i> Services</a></li>
-            <li><a href="reports.php"><i class="fas fa-chart-bar"></i> Reports</a></li>
         </ul>
     </nav>
 
@@ -422,8 +421,8 @@ foreach ($statuses as $status) {
                         <tr>
                             <th>Booking ID</th>
                             <th>Customer</th>
-                            <th>Service Type</th>
-                            <th>Preferred Date/Time</th>
+                            <th>Service Name</th>
+                            <th>Preferred Date</th>
                             <th>Status</th>
                             <th>Created</th>
                             <th>Actions</th>
@@ -453,18 +452,16 @@ foreach ($statuses as $status) {
                                         </small>
                                     </td>
                                     <td>
-                                        <span class="service-type"><?php echo htmlspecialchars($booking['service_type']); ?></span>
+                                        <span class="service-name"><?php echo htmlspecialchars($booking['service_name']); ?></span>
                                         <br>
                                         <small style="color: #7f8c8d;">
-                                            <?php echo htmlspecialchars(substr($booking['description'], 0, 50)); ?>...
+                                            <?php echo htmlspecialchars(substr($booking['problem_description'], 0, 50)); ?>...
                                         </small>
                                     </td>
                                     <td>
                                         <?php if ($booking['preferred_date']): ?>
                                             <strong><?php echo date('M d, Y', strtotime($booking['preferred_date'])); ?></strong>
-                                            <?php if ($booking['preferred_time']): ?>
-                                                <br><?php echo date('h:i A', strtotime($booking['preferred_time'])); ?>
-                                            <?php endif; ?>
+                                            
                                         <?php else: ?>
                                             <span style="color: #7f8c8d;">Not specified</span>
                                         <?php endif; ?>
@@ -553,4 +550,4 @@ foreach ($statuses as $status) {
         }
     </script>
 </body>
-</html> 
+</html>

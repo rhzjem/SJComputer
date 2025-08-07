@@ -478,6 +478,29 @@ p {
     border-radius: 20px;
 }
 
+/* Add to your style.css */
+.book-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f23535;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+.book-btn.login-btn {
+    background-color: #3374f6;
+}
+
+.book-btn:hover {
+    background-color: #d62b2b;
+}
+
+.book-btn.login-btn:hover {
+    background-color: #2a62d4;
+}
+
 /* Why Choose Section */
 
 .whyChoose {

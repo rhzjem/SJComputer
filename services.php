@@ -1,5 +1,10 @@
 <?php
 require_once 'includes/functions.php';
+
+// Set redirect URL for after login
+if (!isLoggedIn() && !isset($_SESSION['redirect_url'])) {
+    $_SESSION['redirect_url'] = 'services.php';
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,20 +59,28 @@ require_once 'includes/functions.php';
                 <h2>OS Installation</h2>
                 <p>Install or reinstall operating systems</p>
                 <h4><strong>₱500.00</strong></h4>
-                <a href="#" class="book-btn" data-service="OS Installation">Book Now</a>
+                <?php if (isLoggedIn()): ?>
+                    <a href="#" class="book-btn" data-service="OS Installation">Book Now</a>
+                <?php else: ?>
+                    <a href="login.php" class="book-btn login-btn">Log In to Book Services</a>
+                <?php endif; ?>
             </div>
         </div>
 
         <div class="service-card">
             <div class="pic">
-                <img src="images/upgrade.png" alt="Laptop Diagnostic" width="250px">
+                <img src="images/LaptopDiagnostic.png" alt="Laptop Diagnostic" width="250px">
             </div>
             
             <div class="text">
                 <h2>Laptop Diagnostic</h2>
                 <p>Full system diagnostic to identify issues</p>
                 <h4><strong>₱200.00</strong></h4>
-                <a href="#" class="book-btn" data-service="Laptop Diagnostic">Book Now</a>
+                <?php if (isLoggedIn()): ?>
+                    <a href="#" class="book-btn" data-service="OS Installation">Book Now</a>
+                <?php else: ?>
+                    <a href="login.php" class="book-btn login-btn">Log In to Book Services</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -82,20 +95,28 @@ require_once 'includes/functions.php';
                 <h2>Virus Removal</h2>
                 <p>Remove malware, spyware, and viruses for a safer system</p>
                 <h4><strong>₱350.00</strong></h4>
-                <a href="#" class="book-btn" data-service="Virus Removal">Book Now</a>
+                <?php if (isLoggedIn()): ?>
+                    <a href="#" class="book-btn" data-service="OS Installation">Book Now</a>
+                <?php else: ?>
+                    <a href="login.php" class="book-btn login-btn">Log In to Book Services</a>
+                <?php endif; ?>
             </div>
         </div>
 
         <div class="service-card">
             <div class="pic">
-                <img src="images/upgrade.png" alt="System Cleanup" width="250px">
+                <img src="images/repair2.png" alt="System Cleanup" width="250px">
             </div>
             
             <div class="text">
                 <h2>Full System Cleanup</h2>
                 <p>Optimize performance by cleaning files and fixing system clutter</p>
                 <h4><strong>₱300.00</strong></h4>
-                <a href="#" class="book-btn" data-service="Full System Cleanup">Book Now</a>
+                <?php if (isLoggedIn()): ?>
+                    <a href="#" class="book-btn" data-service="OS Installation">Book Now</a>
+                <?php else: ?>
+                    <a href="login.php" class="book-btn login-btn">Log In to Book Services</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -185,7 +206,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const bookingForm = document.getElementById("bookingForm");
     const serviceNameInput = document.getElementById("serviceName");
 
-    document.querySelectorAll(".book-btn").forEach(btn => {
+    // Only add click event for Book Now buttons
+    document.querySelectorAll(".book-btn:not(.login-btn)").forEach(btn => {
         btn.addEventListener("click", function (e) {
             e.preventDefault();
             const service = this.getAttribute('data-service');

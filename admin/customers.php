@@ -279,7 +279,6 @@ $newCustomers = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
             <li><a href="orders.php"><i class="fas fa-shopping-cart"></i> Orders</a></li>
             <li><a href="customers.php" class="active"><i class="fas fa-users"></i> Customers</a></li>
             <li><a href="services.php"><i class="fas fa-tools"></i> Services</a></li>
-            <li><a href="reports.php"><i class="fas fa-chart-bar"></i> Reports</a></li>
         </ul>
     </nav>
 

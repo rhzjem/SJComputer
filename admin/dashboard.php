@@ -322,8 +322,8 @@ $stats['pending_orders'] = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
             <li><a href="products.php"><i class="fas fa-box"></i> Products</a></li>
             <li><a href="orders.php"><i class="fas fa-shopping-cart"></i> Orders</a></li>
             <li><a href="customers.php"><i class="fas fa-users"></i> Customers</a></li>
-            <li><a href="services.php"><i class="fas fa-tools"></i> Services</a></li>
-            <li><a href="reports.php"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="services.php"><i class="fas fa-tools"></i> Services</a></li>   
+
         </ul>
     </nav>
 
@@ -373,7 +373,6 @@ $stats['pending_orders'] = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>Date</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -388,11 +387,6 @@ $stats['pending_orders'] = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
                                         </span>
                                     </td>
                                     <td><?php echo date('M d, Y', strtotime($order['created_at'])); ?></td>
-                                    <td>
-                                        <a href="order_details.php?id=<?php echo $order['id']; ?>" style="color: #3498db; text-decoration: none;">
-                                            <i class="fas fa-eye"></i> View
-                                        </a>
-                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -428,10 +422,6 @@ $stats['pending_orders'] = $stmt->fetch(PDO::FETCH_ASSOC)['count'];
                         <span>Service Bookings</span>
                     </a>
                     
-                    <a href="reports.php" class="action-btn">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>View Reports</span>
-                    </a>
                 </div>
             </div>
         </div>

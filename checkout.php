@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if ($success): ?>
         <div class="success-message" style="color: green; text-align: center; margin: 10px 0;">
             <?php echo $success; ?>
-            <br><a href="orders.php" style="color: blue;">View My Orders</a>
+            <!-- <br><a href="orders.php" style="color: blue;">View My Orders</a> -->
         </div>
     <?php else: ?>
         <div class="checkout-container" style="display: flex; gap: 30px;">

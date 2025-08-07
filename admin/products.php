@@ -257,7 +257,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <li><a href="orders.php"><i class="fas fa-shopping-cart"></i> Orders</a></li>
             <li><a href="customers.php"><i class="fas fa-users"></i> Customers</a></li>
             <li><a href="services.php"><i class="fas fa-tools"></i> Services</a></li>
-            <li><a href="reports.php"><i class="fas fa-chart-bar"></i> Reports</a></li>
         </ul>
     </nav>
 

@@ -352,5 +352,80 @@ function updateUserProfile($userId, $fullName, $email, $phone, $address) {
         ];
     }
 }
+
+/*Services for admin panel*/
+
+// Service Booking Functions
+function createServiceBooking($userId, $serviceType, $description, $preferredDate, $preferredTime, $contactNumber) {
+    $conn = getDBConnection();
+    $stmt = $conn->prepare("INSERT INTO service_bookings 
+                          (user_id, service_name, customer_name, customer_email, contact_number, 
+                           preferred_date, problem_description, booking_date, status) 
+                          VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), 'pending')");
+    
+    $user = getUserById($userId);
+    return $stmt->execute([
+        $userId, 
+        $serviceType, 
+        $user['full_name'], 
+        $user['email'], 
+        $contactNumber, 
+        $preferredDate, 
+        $description
+    ]);
+}
+
+function getAllServiceBookings($status = null) {
+    $conn = getDBConnection();
+    
+    $sql = "SELECT sb.*, u.username 
+            FROM service_bookings sb 
+            JOIN users u ON sb.user_id = u.id";
+    
+    $params = [];
+    if ($status) {
+        $sql .= " WHERE sb.status = ?";
+        $params[] = $status;
+    }
+    
+    $sql .= " ORDER BY sb.created_at DESC";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+function updateServiceBookingStatus($bookingId, $status, $adminNotes = null) {
+    $conn = getDBConnection();
+    $stmt = $conn->prepare("UPDATE service_bookings SET status = ?, admin_notes = ? WHERE id = ?");
+    return $stmt->execute([$status, $adminNotes, $bookingId]);
+}
+
+function getServiceBookingById($bookingId) {
+    $conn = getDBConnection();
+    $stmt = $conn->prepare("SELECT sb.*, u.username, u.full_name, u.email, u.phone 
+                           FROM service_bookings sb 
+                           JOIN users u ON sb.user_id = u.id 
+                           WHERE sb.id = ?");
+    $stmt->execute([$bookingId]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function getServiceBookingCountsByStatus() {
+    $conn = getDBConnection();
+    $statuses = ['pending', 'confirmed', 'in_progress', 'completed', 'cancelled'];
+    $counts = [];
+    
+    foreach ($statuses as $status) {
+        $stmt = $conn->prepare("SELECT COUNT(*) as count FROM service_bookings WHERE status = ?");
+        $stmt->execute([$status]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $counts[$status] = $result['count'];
+    }
+    
+    return $counts;
+}
+
 ?> 
 

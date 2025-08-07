@@ -3,13 +3,22 @@ require_once '../includes/functions.php';
 requireAdmin();
 
 $conn = getDBConnection();
-$message = '';
-$error = '';
 
-// Get categories for dropdown
-$categories = getAllCategories();
+// Get product data if ID is provided
+$product = null;
+if (isset($_GET['id'])) {
+    $productId = (int)$_GET['id'];
+    $product = getProductById($productId);
+    if (!$product) {
+        header('Location: products.php');
+        exit();
+    }
+}
 
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Process form data and update product
+    $id = (int)$_POST['id'];
     $name = sanitizeInput($_POST['name']);
     $description = sanitizeInput($_POST['description']);
     $price = (float)$_POST['price'];
@@ -18,36 +27,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $isFeatured = isset($_POST['is_featured']) ? 1 : 0;
     
     // Handle image upload
-    $imagePath = '';
-    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = '../images/';
-        $fileName = time() . '_' . basename($_FILES['image']['name']);
-        $targetPath = $uploadDir . $fileName;
-        
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
-            $imagePath = 'images/' . $fileName;
-        } else {
-            $error = 'Failed to upload image.';
+    $imagePath = $product['image_path']; // Keep existing by default
+    
+    if (!empty($_FILES['image']['name'])) {
+        $uploadResult = uploadImage($_FILES['image'], '../uploads/');
+        if ($uploadResult) {
+            $imagePath = 'uploads/' . basename($uploadResult);
+            // Optionally delete the old image file if it exists
+            if (!empty($product['image_path']) && file_exists('../' . $product['image_path'])) {
+                unlink('../' . $product['image_path']);
+            }
         }
     }
     
-    if (empty($error)) {
-        if (addProduct($name, $description, $price, $categoryId, $imagePath, $stockQuantity, $isFeatured)) {
-            $message = 'Product added successfully!';
-            // Clear form data
-            $_POST = array();
-        } else {
-            $error = 'Failed to add product.';
-        }
+    if (updateProduct($id, $name, $description, $price, $categoryId, $imagePath, $stockQuantity, $isFeatured)) {
+        header('Location: products.php?success=1');
+        exit();
+    } else {
+        $error = "Failed to update product";
     }
 }
+
+$categories = getAllCategories();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product - SJ Computer Admin</title>
+    <title>Edit Product - SJ Computer Admin</title>
     <script src="https://kit.fontawesome.com/cca3f4e97d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../style.css">
     <style>
@@ -105,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         .admin-container {
-            max-width: 800px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -121,8 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #2c3e50;
         }
         
-        .back-btn {
-            background: #6c757d;
+        .add-btn, .back-btn {
+            background: #3498db;
             color: white;
             padding: 0.75rem 1.5rem;
             text-decoration: none;
@@ -133,17 +142,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transition: background 0.3s;
         }
         
+        .back-btn {
+            background: #7f8c8d;
+        }
+        
+        .add-btn:hover {
+            background: #2980b9;
+        }
+        
         .back-btn:hover {
-            background: #5a6268;
+            background: #6c757d;
         }
         
         .message {
             padding: 1rem;
             margin-bottom: 1rem;
             border-radius: 6px;
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
         }
         
         .error {
@@ -152,92 +166,111 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid #f5c6cb;
         }
         
-        .form-container {
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .product-form {
             background: white;
-            padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 2rem;
         }
         
         .form-group {
             margin-bottom: 1.5rem;
         }
         
-        .form-group label {
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
             color: #2c3e50;
         }
         
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-family: inherit;
             font-size: 1rem;
             transition: border-color 0.3s;
         }
         
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
             border-color: #3498db;
+            outline: none;
         }
         
-        .form-group textarea {
+        textarea {
+            min-height: 120px;
             resize: vertical;
-            min-height: 100px;
         }
         
-        .checkbox-group {
+        .checkbox-container {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         
-        .checkbox-group input[type="checkbox"] {
+        input[type="checkbox"] {
             width: auto;
+        }
+        
+        .current-image {
+            margin-top: 1rem;
+        }
+        
+        .current-image img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 0.5rem;
         }
         
         .form-actions {
             display: flex;
-            gap: 1rem;
+            justify-content: flex-end;
             margin-top: 2rem;
         }
         
-        .btn {
+        .btn-save {
+            background: #27ae60;
+            color: white;
             padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 6px;
             font-size: 1rem;
             cursor: pointer;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             transition: background 0.3s;
         }
         
-        .btn-primary {
-            background: #3498db;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #2980b9;
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
+        .btn-save:hover {
+            background: #229954;
         }
         
         .logout-btn {
@@ -253,19 +286,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .logout-btn:hover {
             background: #c0392b;
         }
-        
-        .image-preview {
-            max-width: 200px;
-            max-height: 200px;
-            margin-top: 0.5rem;
-            border-radius: 4px;
-            display: none;
-        }
     </style>
 </head>
 <body>
     <div class="admin-header">
-        <h1><i class="fas fa-plus"></i> SJ Computer - Add Product</h1>
+        <h1><i class="fas fa-edit"></i> SJ Computer - Edit Product</h1>
         <div>
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['full_name']); ?></span>
             <a href="../logout.php" class="logout-btn" style="margin-left: 1rem;">Logout</a>
@@ -278,102 +303,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <li><a href="products.php" class="active"><i class="fas fa-box"></i> Products</a></li>
             <li><a href="orders.php"><i class="fas fa-shopping-cart"></i> Orders</a></li>
             <li><a href="customers.php"><i class="fas fa-users"></i> Customers</a></li>
-            <li><a href="services.php"><i class="fas fa-tools"></i> Services</a></li>       
+            <li><a href="services.php"><i class="fas fa-tools"></i> Services</a></li>
         </ul>
     </nav>
 
     <div class="admin-container">
         <div class="page-header">
-            <h2><i class="fas fa-plus"></i> Add New Product</h2>
+            <h2><i class="fas fa-edit"></i> Edit Product</h2>
             <a href="products.php" class="back-btn">
                 <i class="fas fa-arrow-left"></i>
                 Back to Products
             </a>
         </div>
 
-        <?php if ($message): ?>
-            <div class="message"><?php echo $message; ?></div>
-        <?php endif; ?>
-
-        <?php if ($error): ?>
+        <?php if (isset($error)): ?>
             <div class="message error"><?php echo $error; ?></div>
         <?php endif; ?>
 
-        <div class="form-container">
-            <form method="POST" action="" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="name">Product Name *</label>
-                    <input type="text" id="name" name="name" value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>" required>
-                </div>
+        <form action="edit_product.php" method="post" class="product-form" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
 
+            <div class="form-group">
+                <label>Product Image</label>
+                <?php if ($product['image_path']): ?>
+                    <div class="current-image">
+                        <img src="../<?php echo $product['image_path']; ?>" alt="Current product image">
+                        <p>Current: <?php echo basename($product['image_path']); ?></p>
+                    </div>
+                <?php else: ?>
+                    <p>No image currently set</p>
+                <?php endif; ?>
+                <input type="file" name="image" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Product Name</label>
+                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($product['name']); ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required><?php echo htmlspecialchars($product['description']); ?></textarea>
+            </div>
+            
+            <div class="form-row">
                 <div class="form-group">
-                    <label for="description">Description *</label>
-                    <textarea id="description" name="description" required><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
+                    <label for="price">Price (₱)</label>
+                    <input type="number" id="price" name="price" step="0.01" min="0" value="<?php echo $product['price']; ?>" required>
                 </div>
-
+                
                 <div class="form-group">
-                    <label for="price">Price (₱) *</label>
-                    <input type="number" id="price" name="price" step="0.01" min="0" value="<?php echo isset($_POST['price']) ? $_POST['price'] : ''; ?>" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="category_id">Category *</label>
+                    <label for="category_id">Category</label>
                     <select id="category_id" name="category_id" required>
-                        <option value="">Select Category</option>
                         <?php foreach ($categories as $category): ?>
-                            <option value="<?php echo $category['id']; ?>" <?php echo (isset($_POST['category_id']) && $_POST['category_id'] == $category['id']) ? 'selected' : ''; ?>>
+                            <option value="<?php echo $category['id']; ?>" <?php echo $category['id'] == $product['category_id'] ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($category['name']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-
+            </div>
+            
+            <div class="form-row">
                 <div class="form-group">
-                    <label for="stock_quantity">Stock Quantity *</label>
-                    <input type="number" id="stock_quantity" name="stock_quantity" min="0" value="<?php echo isset($_POST['stock_quantity']) ? $_POST['stock_quantity'] : '0'; ?>" required>
+                    <label for="stock_quantity">Stock Quantity</label>
+                    <input type="number" id="stock_quantity" name="stock_quantity" min="0" value="<?php echo $product['stock_quantity']; ?>" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="image">Product Image</label>
-                    <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(this)">
-                    <img id="imagePreview" class="image-preview" alt="Preview">
+            <div class="form-group">
+                <label>Featured Product</label>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="is_featured" name="is_featured" <?php echo $product['is_featured'] ? 'checked' : ''; ?>>
+                    <label for="is_featured">Mark as featured</label>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="is_featured" name="is_featured" <?php echo (isset($_POST['is_featured']) && $_POST['is_featured']) ? 'checked' : ''; ?>>
-                        <label for="is_featured">Featured Product</label>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i>
-                        Add Product
-                    </button>
-                    <a href="products.php" class="btn btn-secondary">
-                        <i class="fas fa-times"></i>
-                        Cancel
-                    </a>
-                </div>
-            </form>
-        </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-save">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </div>
+        </form>
     </div>
-
-    <script>
-        function previewImage(input) {
-            const preview = document.getElementById('imagePreview');
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                }
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                preview.style.display = 'none';
-            }
-        }
-    </script>
 </body>
-</html> 
+</html>

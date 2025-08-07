@@ -359,7 +359,6 @@ foreach ($statuses as $status) {
             <li><a href="orders.php" class="active"><i class="fas fa-shopping-cart"></i> Orders</a></li>
             <li><a href="customers.php"><i class="fas fa-users"></i> Customers</a></li>
             <li><a href="services.php"><i class="fas fa-tools"></i> Services</a></li>
-            <li><a href="reports.php"><i class="fas fa-chart-bar"></i> Reports</a></li>
         </ul>
     </nav>
 
@@ -446,9 +445,6 @@ foreach ($statuses as $status) {
                                     </td>
                                     <td>
                                         <div class="action-buttons">
-                                            <a href="order_details.php?id=<?php echo $order['id']; ?>" class="btn btn-view">
-                                                <i class="fas fa-eye"></i> View
-                                            </a>
                                             <button onclick="openStatusModal(<?php echo $order['id']; ?>, '<?php echo $order['status']; ?>')" class="btn btn-update">
                                                 <i class="fas fa-edit"></i> Update
                                             </button>

@@ -1,8 +1,18 @@
 <?php
 require_once 'includes/functions.php';
 
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $error = '';
 $success = '';
+
+// Check if we're coming from services.php and set redirect URL
+if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'services.php') !== false) {
+    $_SESSION['redirect_url'] = 'services.php';
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = sanitizeInput($_POST['username']);
@@ -13,19 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $result = loginUser($username, $password);
         if ($result['success']) {
-            // Debug: Check admin status
-            $adminStatus = isAdmin();
-            $sessionAdmin = $_SESSION['is_admin'] ?? 'not set';
+            // Check if there's a redirect URL in session
+            $redirectUrl = $_SESSION['redirect_url'] ?? 'index.php';
+            unset($_SESSION['redirect_url']); // Clear it after use
             
-            if ($adminStatus) {
-                // Redirect to admin dashboard
+            if (isAdmin()) {
                 header('Location: admin/dashboard.php');
-                exit();
             } else {
-                // Redirect to regular user page
-                header('Location: index.php');
-                exit();
+                header('Location: ' . $redirectUrl);
             }
+            exit();
         } else {
             $error = $result['message'];
         }

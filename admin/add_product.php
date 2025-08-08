@@ -6,7 +6,7 @@ $conn = getDBConnection();
 $message = '';
 $error = '';
 
-// Get categories for dropdown
+// Get categories
 $categories = getAllCategories();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

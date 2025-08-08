@@ -128,9 +128,9 @@ p {
     background: #344556;
 }
 
-/* Add these styles to your CSS */
+
 .cards {
-    position: relative; /* Add this to make the button position relative to the card */
+    position: relative;
     flex-basis: 25;
     padding: 10px;
     max-width: 250px;
@@ -146,7 +146,7 @@ p {
 }
 
 .card-link {
-    flex-grow: 1; /* Make the link take up remaining space */
+    flex-grow: 1; 
     text-decoration: none;
     color: inherit;
     display: block;
@@ -382,23 +382,23 @@ p {
 
 .cards img {
     width: 100%;
-    height: 200px; /* Fixed height */
-    object-fit: contain; /* or 'cover' depending on your preference */
+    height: 200px; 
+    object-fit: contain;
     border-radius: 4px;
 }
 
 
 .product-card {
-    flex: 0 0 calc(25% - 20px); /* Adjust percentage based on how many cards per row you want */
+    flex: 0 0 calc(25% - 20px); 
     margin: 10px;
-    max-width: 250px; /* Match this with your cards max-width */
+    max-width: 250px; 
 }
 
 .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* or center depending on your preference */
-    gap: 20px; /* This replaces margin on individual cards */
+    justify-content: flex-start; 
+    gap: 20px; 
 }
 
 /* Services Section*/
@@ -478,7 +478,6 @@ p {
     border-radius: 20px;
 }
 
-/* Add to your style.css */
 .book-btn {
     display: inline-block;
     padding: 10px 20px;
@@ -774,8 +773,6 @@ ul {
 
 /* services */
 
-
-
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -805,7 +802,7 @@ ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Center horizontally */
+    align-items: center;
     text-align: center;
     padding: 10px
 }
@@ -1005,8 +1002,6 @@ ul {
     padding-top: 10px;
 }
 
-
-
 /*Product Details*/
 
 .col2 {
@@ -1179,7 +1174,7 @@ input:focus {
     padding-bottom: 10px;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
     .productDetails .row {
         flex-direction: column;
@@ -1283,13 +1278,12 @@ td:last-child {
 
 
 
-/* 
-account */
+/* account */
 
 .accountPage {
     padding: 50px 0;
     background: radial-gradient(#fff, #8bbefc);
-    min-height: calc(100vh - 120px); /* Adjust based on your header/footer height */
+    min-height: calc(100vh - 120px);
     display: flex;
     align-items: center; background: radial-gradient(#fff, #8bbefc);
 }
